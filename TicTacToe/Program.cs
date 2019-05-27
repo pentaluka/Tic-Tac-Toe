@@ -5,25 +5,36 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            string playerNameA = "";
-            string playerNameB = "";
-            char playerSymbolA = 'x';
-            char playerSymbolB = 'o';
+            PlayerHuman gA = new PlayerHuman();
+            PlayerComputer gB = new PlayerComputer();
+            gA.Name = "User";
+            gB.Name = "Computer";
+            gA.Symbol = 'x';
+            gB.Symbol = 'o';
             char[,] board = new char[3, 3] {
  { '1', '2', '3' },
  { '4', '5', '6' },
  { '7', '8', '9' }
  };
-            Console.Write("Enter the name of player A: ");
-            playerNameA = Console.ReadLine();
-            Console.Write("Enter the name of player B: ");
-            playerNameB = Console.ReadLine();
             // A loop over players moves
             bool gameOver = false;
+            bool movePlayerA = true;
             while (!gameOver)
             {
                 Console.Clear();
                 DrawBoard(board);
+                if (movePlayerA)
+                {
+                    Console.WriteLine("Current player: " + gA.Name);
+                    gameOver = gA.MakeMove(board);
+                    movePlayerA = false;
+                }
+                else
+                {
+                    Console.WriteLine("Current player: " + gB.Name);
+                    gameOver = gB.MakeMove(board);
+                    movePlayerA = true;
+                }
                 Console.ReadKey();
                 // ...
             }
@@ -39,6 +50,30 @@ namespace TicTacToe
                     Console.Write(board[i, j]);
                 Console.WriteLine();
             }
+        }
+    }
+    ////////////////////////////////////////////////////
+    interface IMove
+    {
+        bool MakeMove(char[,] board);
+    }
+    abstract class Player
+    {
+        public string Name { get; set; }
+        public char Symbol { get; set; }
+    }
+    class PlayerHuman : Player, IMove
+    {
+        public bool MakeMove(char[,] board)
+        {
+            return false; // To correct
+        }
+    }
+    class PlayerComputer : Player, IMove
+    {
+        public bool MakeMove(char[,] board)
+        {
+            return false; // To correct
         }
     }
 }
